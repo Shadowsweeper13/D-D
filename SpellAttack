@@ -1,0 +1,100 @@
+package Rolls;
+
+public class SpellAttack extends D20Roller{
+	private int spellModifier;
+	private int damageDiceSides;
+	private int numDamageDice;
+
+	public SpellAttack(int spellModifier) {
+		super();
+		this.spellModifier = spellModifier;
+		this.damageDiceSides = damageDiceSides;
+		this.numDamageDice = numDamageDice;
+		// TODO Auto-generated constructor stub
+	}
+	public int spellAttack() {
+		return rollD20() + spellModifier;
+	}
+	public int castSpell() {
+		int totalDamage = 0;
+		for(int i = 0; i<numDamageDice; i++) {
+			totalDamage += rollDice(damageDiceSides);
+		}
+		return totalDamage + spellModifier;
+	}
+	public int burningHands(int spellLevel) {
+		int fDamage = 0;
+		int baseNumDamageDice = 3;
+		int damageDiceSides = 6;
+		int totalNumDamageDice = baseNumDamageDice + (spellLevel -1);
+		for(int i = 0; i<totalNumDamageDice; i++) {
+			fDamage += rollDice(damageDiceSides);
+		}
+		return fDamage;
+	}
+	public int thornWhip() {
+		int tDamage = 0;
+		int numDamageDice = 2;
+		int damageDiceSides = 6;
+		for(int i=0;i<numDamageDice;i++) {
+			tDamage += rollDice(damageDiceSides);
+		}
+		return tDamage;
+	}
+	public int earthTremor(int spellLevel) {
+		int eDamage = 0;
+		int baseNumDamageDice = 1;
+		int damageDiceSides = 6;
+		int totalNumDamageDice = baseNumDamageDice + (spellLevel -1);
+		for(int i = 0; i<totalNumDamageDice;i++) {
+			eDamage += rollDice(damageDiceSides);
+		}
+		return eDamage;
+	}
+	public int thunderWave(int spellLevel) {
+		int tDamage = 0;
+		int baseNumDamageDice = 2;
+		int damageDiceSides = 8;
+		int totalNumDamageDice = baseNumDamageDice + (spellLevel - 1);
+		for(int i = 0;i<totalNumDamageDice;i++) {
+			tDamage += rollDice(damageDiceSides);
+		}
+		return tDamage;
+	}
+	public int scorchingRayDamage(boolean isCritical) {
+		int sDamage = 0;
+		int damageDiceSides = 6;
+		int diceRollsPerRay = isCritical ? 4:2;
+		for(int i = 0;i<diceRollsPerRay;i++) {
+			for(int j =0;j<diceRollsPerRay;j++);{
+				sDamage += rollDice(damageDiceSides);
+			}
+		}
+		return sDamage;
+	}
+	public int [] scorchingRay(int[] targetACs) {
+		int []damages = new int[targetACs.length];
+		for(int i = 0;i<targetACs.length;i++) {
+			int attackRoll = spellAttack();
+			boolean isCritical = attackRoll - spellModifier == 20;
+			if(attackRoll >= targetACs[i]) {
+				damages[i] = scorchingRayDamage(isCritical);
+				if(isCritical) {
+					System.out.println("That's a Nat 20 on " + (i+1) + "!");
+				}
+			}
+		}
+		return damages;
+	}
+	public int heatMetal(int spellLevel) {
+		int fDamage = 0;
+		int damageDiceSides = 8;
+		int baseNumDamageDice = 2;
+		int totalNumDamageDice = baseNumDamageDice + (spellLevel -1);
+		for(int i = 0;i<totalNumDamageDice;i++) {
+			fDamage += rollDice(damageDiceSides);
+		}
+		return fDamage;
+	}
+
+}
