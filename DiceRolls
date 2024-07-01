@@ -1,0 +1,19 @@
+package Rolls;
+
+import java.util.Random;
+
+public class D20Roller {
+	Random random = new Random();
+
+	public D20Roller() {
+		this.random=new Random();
+		// TODO Auto-generated constructor stub
+	}
+	public int rollD20() {
+		return random.nextInt(20)+1;
+	}
+	public int rollDice(int sides) {
+		return random.nextInt(sides)+1;
+	}
+
+}
