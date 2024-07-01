@@ -1,0 +1,49 @@
+package Rolls;
+
+public class AttackRoll extends D20Roller{
+	private int attackModifier;
+	private int damageModifier;
+	private int damageDiceSides;
+	private int numDamageDice;
+	private boolean isCriticalHit;
+	
+	public AttackRoll(int attackModifier,int damageModifier, int damageDiceSides, int numDamageDice) {
+		super();
+		this.attackModifier = attackModifier;
+		this.damageModifier = damageModifier;
+		this.damageDiceSides = damageDiceSides;
+		this.numDamageDice = numDamageDice;
+		isCriticalHit = false;
+		// TODO Auto-generated constructor stub
+	}
+	public int performAttack() {
+		int roll = rollD20();
+		if(roll == 20) {
+			isCriticalHit = true;
+		}
+		return roll + attackModifier;
+	}
+	public int calculateDamage() {
+		int totalDamage=0;
+		for(int i = 0; i<numDamageDice; i++) {
+			totalDamage += rollDice(damageDiceSides);
+		}
+		return totalDamage + damageModifier;
+	}
+	public int scimitarAttack() {
+		int attackRoll = performAttack();
+		if(attackRoll == 20) {
+			System.out.println("Nat 20! Whack with that scimitar!");
+			return calculateDamage()*2;
+		}
+		else if(attackRoll >= 0) {
+			System.out.println("Attack Roll is " + attackRoll);
+			return calculateDamage();
+		}
+		else{
+			System.out.println("Attack Roll missed at " + attackRoll);
+			return 0;
+		}
+	}
+
+}
